@@ -9,6 +9,6 @@ export default {
     pass: process.env.MAIL_PASS
   },
   default: {
-    from: 'Lumiin <noreply@lumiin.io>'
+    from: 'Lumiin <noreply@lumiin.io>',
   }
 }

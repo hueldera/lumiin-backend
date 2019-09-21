@@ -7,7 +7,7 @@ import { resolve } from 'path'
 class Mail {
   constructor () {
     const { host, port, secure, auth } = mailConfig
-    console.log(mailConfig)
+    console.log('teste', mailConfig)
     this.transporter = nodemailer.createTransport({
       host,
       port,
