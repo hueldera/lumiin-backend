@@ -19,7 +19,7 @@ class PersonalDataController {
       rg: Yup.integer().required(),
       street: Yup.string().required(),
       house_number: Yup.integer().required(),
-      house_complement: Yup.string().required(),
+      house_complement: Yup.string(),
       neighborhood: Yup.string().required(),
       city: Yup.string().required(),
       state: Yup.string().required(),
