@@ -1,3 +1,6 @@
+import Sequelize, { Model } from 'sequelize'
+import bcrypt from 'bcryptjs'
+
 class BankData extends Model {
   static init(sequelize) {
     super.init(
