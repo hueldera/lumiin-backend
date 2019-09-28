@@ -51,19 +51,19 @@ class PersonalDataController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      birth_date: Yup.date().required(),
-      cpf_cnpj: Yup.integer().required(),
-      rg: Yup.integer().required(),
-      street: Yup.string().required(),
-      house_number: Yup.integer().required(),
-      house_complement: Yup.string().required(),
-      neighborhood: Yup.string().required(),
-      city: Yup.string().required(),
-      state: Yup.string().required(),
-      country: Yup.string().required(),
-      state_subscription: Yup.integer().required(),
-      civic_subscription: Yup.integer().required()
+      name: Yup.string(),
+      birth_date: Yup.date(),
+      cpf_cnpj: Yup.integer(),
+      rg: Yup.integer(),
+      street: Yup.string(),
+      house_number: Yup.integer(),
+      house_complement: Yup.string(),
+      neighborhood: Yup.string(),
+      city: Yup.string(),
+      state: Yup.string(),
+      country: Yup.string(),
+      state_subscription: Yup.integer(),
+      civic_subscription: Yup.integer()
     })
 
     if (!await schema.isValid(req.body)) {

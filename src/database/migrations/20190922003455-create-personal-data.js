@@ -61,11 +61,11 @@ module.exports = {
       },
       state_subscription: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       civic_subscription: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

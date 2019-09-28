@@ -45,11 +45,11 @@ class BankDataController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      cpf: Yup.number().required(),
-      holder: Yup.string().required(),
-      account: Yup.number().required(),
-      bank_branch: Yup.string().required(),
-      bank: Yup.string().required(),
+      cpf: Yup.number(),
+      holder: Yup.string(),
+      account: Yup.number(),
+      bank_branch: Yup.string(),
+      bank: Yup.string(),
     })
 
     if (!await schema.isValid(req.body)) {
