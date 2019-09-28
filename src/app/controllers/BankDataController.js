@@ -4,9 +4,12 @@ import * as Yup from 'yup'
 class BankDataController {
 
   async index(req, res) {
-    const bankData = BankData.findAll()
-
-    return bankData
+    try {
+      const bankData = BankData.findAll()
+      return res.status(200).json(bankData)
+    } catch(e) {
+      return res.status(400).json({ error: 'Unable to find records. ' })
+    }
   }
 
   async store (req, res) {
@@ -22,10 +25,13 @@ class BankDataController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const body = req.body
+    try {
+      const bankData = await BankData.create(req.body)
+      return res.status(200).json(bankData)
+    } catch(e) {
+      return res.status(400).json({ error: 'Unable to create record. ' })
+    }
 
-    await User.create(body)
-    return res.status(200).json(body)
   }
 
   async show (req,res) {
@@ -33,7 +39,7 @@ class BankDataController {
       const bankData = await BankData.findOne({ where: { id: req.params.id }})
       return res.status(200).json(bankData)
     } catch (e) {
-      return res.status(200).json({ error: 'Unable to find this record.'})
+      return res.status(400).json({ error: 'Unable to find this record.'})
     }
   }
 
@@ -68,3 +74,5 @@ class BankDataController {
     }
   }
 }
+
+export default new BankDataController()
