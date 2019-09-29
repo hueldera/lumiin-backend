@@ -3,12 +3,8 @@ import * as Yup from 'yup'
 
 class PartnersController {
   async index(req, res) {
-    try {
-      const partners = Partners.findAll()
-      return res.status(200).json(partners)
-    } catch(e) {
-      return res.status(400).json({ error: 'Unable to find records.' })
-    }
+    const partners = Partners.findAll()
+    return res.json(partners)
   }
 
   async store(req, res) {
@@ -22,21 +18,13 @@ class PartnersController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    try {
-      const partners = await Partners.create(req.body)
-      return res.status(200).json(partners)
-    } catch(e) {
-      return res.status(400).json({ error: 'Unable to create record.' })
-    }
+    const partners = await Partners.create(req.body)
+    return res.json(partners)
   }
 
   async show(req, res) {
-    try {
-      const partners = await Partners.findOne({ where: { id: req.params.id } })
-      return res.status(200).json(partners)
-    } catch(e) {
-      return res.status(400).json({ error: 'Unable to find record.' })
-    }
+    const partners = await Partners.findOne({ where: { id: req.params.id } })
+    return res.json(partners)
   }
 
   async update(req, res) {
@@ -50,22 +38,14 @@ class PartnersController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    try {
-      const partners = await Partners.findOne({ where: { id: req.params.id } })
-      partners.update(req.body, { where: { id: req.params.id } })
-      return res.status(200).json(partners)
-    } catch(e) {
-      return res.status(400).json({ error: 'Unable to update record.' })
-    }
+    const partners = await Partners.findOne({ where: { id: req.params.id } })
+    partners.update(req.body, { where: { id: req.params.id } })
+    return res.json(partners)
   }
 
   async destroy(req, res) {
-    try {
-      await Partners.destroy({ where: { id: req.params.id } })
-      return res.status(200).json({ success: 'Deleted successfully.' })
-    } catch(e) {
-      return res.status(400).json({ error: 'Unable to delete record.' })
-    }
+    await Partners.destroy({ where: { id: req.params.id } })
+    return res.json({ success: 'Deleted successfully.' })
   }
 }
 

@@ -3,12 +3,8 @@ import * as Yup from 'yup'
 
 class DocumentsController {
   async index(req, res) {
-    try {
-      const documents = Documents.findAll()
-      return res.status(200).json(documents)
-    } catch (e) {
-      return res.status(400).json({ error: 'Unable to find records. ' })
-    }
+    const documents = Documents.findAll()
+    return res.json(documents)
   }
 
   async store(req, res) {
@@ -20,22 +16,13 @@ class DocumentsController {
     if (!await schema.isValid(req.body)) {
       return res.status(400).json({ error: 'Validation fails.' })
     }
-
-    try {
-      const documents = await Documents.create(req.body)
-      return res.status(200).json(documents)
-    } catch (e) {
-      return res.status(400).json({ error: 'Unable to create record.' })
-    }
+    const documents = await Documents.create(req.body)
+    return res.json(documents)
   }
 
   async show(req, res) {
-    try {
-      const documents = await Documents.findOne({ where: { id: req.params.id } })
-      return res.status(200).json(documents)
-    } catch (e) {
-      return res.status(400).json({ error: 'Unable to find record. ' })
-    }
+    const documents = await Documents.findOne({ where: { id: req.params.id } })
+    return res.json(documents)
   }
 
   async update(req, res) {
@@ -48,22 +35,14 @@ class DocumentsController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    try {
-      const documents = await Documents.findOne({ where: { id: req.params.id } })
-      documents.update(req.body, { where: { id: req.params.id } })
-      return res.status(200).json(documents)
-    } catch (e) {
-      return res.status(400).json({ error: 'Unable to update record.' })
-    }
+    const documents = await Documents.findOne({ where: { id: req.params.id } })
+    documents.update(req.body, { where: { id: req.params.id } })
+    return res.json(documents)
   }
 
   async destroy(req, res) {
-    try {
-      await Documents.destroy({ where: { id: req.params.id } })
-      return res.status(200).json({ success: 'Deleted successfully.' })
-    } catch (e) {
-      return res.status(400).json({ error: 'Unable to delete record.' })
-    }
+    await Documents.destroy({ where: { id: req.params.id } })
+    return res.json({ success: 'Deleted successfully.' })
   }
 
 }

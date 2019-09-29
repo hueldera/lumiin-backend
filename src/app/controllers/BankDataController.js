@@ -4,12 +4,8 @@ import * as Yup from 'yup'
 class BankDataController {
 
   async index(req, res) {
-    try {
-      const bankData = BankData.findAll()
-      return res.status(200).json(bankData)
-    } catch(e) {
-      return res.status(400).json({ error: 'Unable to find records. ' })
-    }
+    const bankData = BankData.findAll()
+    return res.json(bankData)
   }
 
   async store (req, res) {
@@ -25,22 +21,13 @@ class BankDataController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    try {
-      const bankData = await BankData.create(req.body)
-      return res.status(200).json(bankData)
-    } catch(e) {
-      return res.status(400).json({ error: 'Unable to create record. ' })
-    }
-
+    const bankData = await BankData.create(req.body)
+    return res.json(bankData)
   }
 
   async show (req,res) {
-    try {
-      const bankData = await BankData.findOne({ where: { id: req.params.id }})
-      return res.status(200).json(bankData)
-    } catch (e) {
-      return res.status(400).json({ error: 'Unable to find this record.'})
-    }
+    const bankData = await BankData.findOne({ where: { id: req.params.id }})
+    return res.json(bankData)
   }
 
   async update(req, res) {
@@ -56,22 +43,14 @@ class BankDataController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    try {
-      const bankData = await BankData.findOne({ where: { id: req.params.id }})
-      bankData.update(req.body, { where: { id: req.params.id }})
-      return res.status(200).json(bankData)
-    } catch(e) {
-      return res.status(400).json({ error: 'Unable to update data.'})
-    }
+    const bankData = await BankData.findOne({ where: { id: req.params.id }})
+    bankData.update(req.body, { where: { id: req.params.id }})
+    return res.json(bankData)
   }
 
   async destroy(req,res) {
-    try {
-      await BankData.destroy({ where: { id: req.params.id }})
-      return res.status(200).json({ success: 'Deleted successfully'})
-    } catch(e) {
-      return res.status(400).json({ error: 'Unable to delete data.' })
-    }
+    await BankData.destroy({ where: { id: req.params.id }})
+    return res.json({ success: 'Deleted successfully'})
   }
 }
 
