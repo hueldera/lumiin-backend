@@ -16,7 +16,7 @@ module.exports = {
         },
       },
       cpf: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
       },
       holder: {

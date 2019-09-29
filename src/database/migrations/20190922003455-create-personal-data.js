@@ -24,11 +24,11 @@ module.exports = {
         allowNull: false
       },
       cpf_cnpj: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
       },
       rg: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: true
       },
       street: {

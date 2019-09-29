@@ -15,8 +15,8 @@ class PersonalDataController {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       birth_date: Yup.date().required(),
-      cpf_cnpj: Yup.number().integer().required(),
-      rg: Yup.number().integer().required(),
+      cpf_cnpj: Yup.string().required(),
+      rg: Yup.string().required(),
       street: Yup.string().required(),
       house_number: Yup.number().integer().required(),
       house_complement: Yup.string(),
