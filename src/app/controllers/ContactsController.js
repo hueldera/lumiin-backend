@@ -14,8 +14,8 @@ class ContactsController {
   async store(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string(),
-      phone: Yup.number().integer()
-      cellphone: Yup.number().integer()
+      phone: Yup.number().integer(),
+      cellphone: Yup.number().integer(),
     })
 
     if (!await schema.isValid(req.body)) {
@@ -42,8 +42,8 @@ class ContactsController {
   async update(req, res) {
     const schema = Yup.object().shape({
       email: Yup.string(),
-      phone: Yup.number().integer()
-      cellphone: Yup.number().integer()
+      phone: Yup.number().integer(),
+      cellphone: Yup.number().integer(),
     })
 
     if (!await schema.isValid(req.body)) {

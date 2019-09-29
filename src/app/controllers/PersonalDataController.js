@@ -25,7 +25,7 @@ class PersonalDataController {
       state: Yup.string().required(),
       country: Yup.string().required(),
       state_subscription: Yup.number().integer(),
-      civic_subscription: Yup.number().integer()
+      civic_subscription: Yup.number().integer(),
     })
 
     if (!await schema.isValid(req.body)) {
