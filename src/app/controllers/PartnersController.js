@@ -13,9 +13,9 @@ class PartnersController {
 
   async store(req, res) {
     const schema = Yup.object().shape({
-      personalData: Yup.integer(),
-      contacts: Yup.integer(),
-      documents: Yup.integer()
+      personalData: Yup.number().integer(),
+      contacts: Yup.number().integer(),
+      documents: Yup.number().integer()
     })
 
     if (!await schema.isValid(req.body)) {
@@ -41,9 +41,9 @@ class PartnersController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      personalData: Yup.integer(),
-      contacts: Yup.integer(),
-      documents: Yup.integer()
+      personalData: Yup.number().integer(),
+      contacts: Yup.number().integer(),
+      documents: Yup.number().integer()
     })
 
     if (!await schema.isValid(req.body)) {

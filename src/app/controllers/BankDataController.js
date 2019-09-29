@@ -14,9 +14,9 @@ class BankDataController {
 
   async store (req, res) {
     const schema = Yup.object().shape({
-      cpf: Yup.number().required(),
+      cpf: Yup.string().required(),
       holder: Yup.string().required(),
-      account: Yup.number().required(),
+      account: Yup.string().required(),
       bank_branch: Yup.string().required(),
       bank: Yup.string().required(),
     })
@@ -45,9 +45,9 @@ class BankDataController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      cpf: Yup.number(),
+      cpf: Yup.string(),
       holder: Yup.string(),
-      account: Yup.number(),
+      account: Yup.string(),
       bank_branch: Yup.string(),
       bank: Yup.string(),
     })
