@@ -44,7 +44,7 @@ class PartnersController {
   }
 
   async destroy(req, res) {
-    await Partners.destroy({ where: { id: req.params.id } })
+    await Partners.destroy({ where: { user_id: req.params.id } })
     return res.json({ success: 'Deleted successfully.' })
   }
 }

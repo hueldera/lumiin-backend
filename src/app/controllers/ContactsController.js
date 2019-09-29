@@ -44,7 +44,7 @@ class ContactsController {
   }
 
   async destroy(req, res) {
-    await Contacts.destroy({ where: { id: req.params.id } })
+    await Contacts.destroy({ where: { user_id: req.params.id } })
     return res.json({ success: 'Deleted successfully.' })
   }
 

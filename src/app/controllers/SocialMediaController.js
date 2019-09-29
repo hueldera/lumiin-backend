@@ -46,7 +46,7 @@ class SocialMediaController {
   }
 
   async destroy(req, res) {
-    await SocialMedia.destroy({ where: { id: req.params.id } })
+    await SocialMedia.destroy({ where: { user_id: req.params.id } })
     return res.json({ success: 'Deleted successfully.' })
   }
 }

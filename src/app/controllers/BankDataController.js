@@ -49,7 +49,7 @@ class BankDataController {
   }
 
   async destroy(req,res) {
-    await BankData.destroy({ where: { id: req.params.id }})
+    await BankData.destroy({ where: { user_id: req.params.id }})
     return res.json({ success: 'Deleted successfully'})
   }
 }

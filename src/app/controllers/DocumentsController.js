@@ -41,7 +41,7 @@ class DocumentsController {
   }
 
   async destroy(req, res) {
-    await Documents.destroy({ where: { id: req.params.id } })
+    await Documents.destroy({ where: { user_id: req.params.id } })
     return res.json({ success: 'Deleted successfully.' })
   }
 
