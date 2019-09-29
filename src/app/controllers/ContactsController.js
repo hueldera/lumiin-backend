@@ -18,6 +18,11 @@ class ContactsController {
       return res.status(400).json({ error: 'Validation fails. ' })
     }
 
+    const exists = await Contacts.findOne({ where: { user_id: req.userId }})
+    if (exists) {
+      return res.status(400).json({ error: 'Could not store record.' })
+    }
+
     const contact = await Contacts.create(req.body)
     return res.json(contact)
   }

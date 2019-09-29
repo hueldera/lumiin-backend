@@ -28,6 +28,11 @@ class PersonalDataController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
+    const exists = await PersonalData.findOne({ where: { user_id: req.userId }})
+    if (exists) {
+      return res.status(400).json({ error: 'Could not store record.' })
+    }
+
     const personalData = await PersonalData.create(req.body)
     return res.json(personalData)
   }
