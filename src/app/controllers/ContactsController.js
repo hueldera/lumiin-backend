@@ -3,8 +3,9 @@ import * as Yup from 'yup'
 
 class ContactsController {
   async index(req, res) {
-    const contacts = Contacts.findAll()
-    return res.json(contacts)
+    Contacts.findAll().then(data => {
+      return res.json(data)
+    })
   }
 
   async store(req, res) {
@@ -49,8 +50,11 @@ class ContactsController {
   }
 
   async destroy(req, res) {
-    await Contacts.destroy({ where: { user_id: req.params.id } })
-    return res.json({ success: 'Deleted successfully.' })
+    await Contacts.destroy({ where: { user_id: req.params.id } }).then(deleted => {
+      if (deleted) {
+        return res.json({ success: 'Deleted successfully.' })
+      }
+    })
   }
 
 }

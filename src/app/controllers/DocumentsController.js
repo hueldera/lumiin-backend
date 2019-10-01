@@ -3,8 +3,9 @@ import * as Yup from 'yup'
 
 class DocumentsController {
   async index(req, res) {
-    const documents = Documents.findAll()
-    return res.json(documents)
+    Documents.findAll().then(data => {
+      return res.json(data)
+    })
   }
 
   async store(req, res) {
@@ -41,8 +42,11 @@ class DocumentsController {
   }
 
   async destroy(req, res) {
-    await Documents.destroy({ where: { user_id: req.params.id } })
-    return res.json({ success: 'Deleted successfully.' })
+    Documents.destroy({ where: { id: req.params.id }}).then(deleted => {
+      if (deleted) {
+        return res.status(200).json({ success: 'Deleted successfully' })
+      }
+    })
   }
 
 }

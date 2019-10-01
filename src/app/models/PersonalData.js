@@ -1,5 +1,4 @@
 import Sequelize, { Model } from "sequelize";
-import bcrypt from "bcryptjs";
 
 class PersonalData extends Model {
   static init(sequelize) {
@@ -20,7 +19,7 @@ class PersonalData extends Model {
         civic_subscription: Sequelize.INTEGER
       },
       {
-        sequelize
+        sequelize,
       }
     );
 
@@ -28,7 +27,7 @@ class PersonalData extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: "user_id", as: "user" });
+    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' })
   }
 }
 

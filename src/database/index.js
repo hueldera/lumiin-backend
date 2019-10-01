@@ -3,8 +3,14 @@ import databaseConfig from '../config/database'
 
 import User from '../app/models/User'
 import File from '../app/models/File'
+import PersonalData from '../app/models/PersonalData.js'
+import BankData from '../app/models/BankData.js'
+import Contacts from '../app/models/Contacts.js'
+import Documents from '../app/models/Documents.js'
+import Partners from '../app/models/Partners.js'
+import SocialMedia from '../app/models/SocialMedia.js'
 
-const models = [User, File]
+const models = [User, File, PersonalData, BankData, Contacts, Documents, Partners, SocialMedia]
 
 class Database {
   constructor () {

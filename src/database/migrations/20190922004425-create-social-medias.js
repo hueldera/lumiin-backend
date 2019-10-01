@@ -1,7 +1,7 @@
 'use strict'
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('SocialMedias', {
+    return queryInterface.createTable('social_media', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -31,17 +31,17 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
     })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('SocialMedias')
+    return queryInterface.dropTable('social_media')
   }
 }

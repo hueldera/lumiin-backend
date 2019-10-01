@@ -3,8 +3,9 @@ import * as Yup from 'yup'
 
 class SocialMediaController {
   async index(req, res) {
-    const socialMedia = SocialMedia.findAll()
-    return res.json(socialMedia)
+    SocialMedia.findAll().then(data => {
+      return res.json(data)
+    })
   }
 
   async store(req, res) {
@@ -51,8 +52,11 @@ class SocialMediaController {
   }
 
   async destroy(req, res) {
-    await SocialMedia.destroy({ where: { user_id: req.params.id } })
-    return res.json({ success: 'Deleted successfully.' })
+    SocialMedia.destroy({ where: { id: req.params.id }}).then(deleted => {
+      if (deleted) {
+        return res.status(200).json({ success: 'Deleted successfully' })
+      }
+    })
   }
 }
 
