@@ -32,7 +32,7 @@ class BankDataController {
   }
 
   async show (req,res) {
-    const bankData = await BankData.findOne({ where: { id: req.params.id }})
+    const bankData = await BankData.findOne({ where: { user_id: req.params.id }})
     return res.json(bankData)
   }
 
@@ -49,8 +49,8 @@ class BankDataController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const bankData = await BankData.findOne({ where: { id: req.params.id }})
-    bankData.update(req.body, { where: { id: req.params.id }})
+    const bankData = await BankData.findOne({ where: { user_id: req.params.id }})
+    bankData.update(req.body, { where: { user_id: req.params.id }})
     return res.json(bankData)
   }
 

@@ -22,7 +22,7 @@ class DocumentsController {
   }
 
   async show(req, res) {
-    const documents = await Documents.findOne({ where: { id: req.params.id } })
+    const documents = await Documents.findOne({ where: { user_id: req.params.id } })
     return res.json(documents)
   }
 
@@ -36,13 +36,13 @@ class DocumentsController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const documents = await Documents.findOne({ where: { id: req.params.id } })
-    documents.update(req.body, { where: { id: req.params.id } })
+    const documents = await Documents.findOne({ where: { user_id: req.params.id } })
+    documents.update(req.body, { where: { user_id: req.params.id } })
     return res.json(documents)
   }
 
   async destroy(req, res) {
-    Documents.destroy({ where: { id: req.params.id }}).then(deleted => {
+    Documents.destroy({ where: { user_id: req.params.id }}).then(deleted => {
       if (deleted) {
         return res.status(200).json({ success: 'Deleted successfully' })
       }

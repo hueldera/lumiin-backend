@@ -24,7 +24,7 @@ class PartnersController {
   }
 
   async show(req, res) {
-    const partners = await Partners.findOne({ where: { id: req.params.id } })
+    const partners = await Partners.findOne({ where: { user_id: req.params.id } })
     return res.json(partners)
   }
 
@@ -39,13 +39,13 @@ class PartnersController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const partners = await Partners.findOne({ where: { id: req.params.id } })
-    partners.update(req.body, { where: { id: req.params.id } })
+    const partners = await Partners.findOne({ where: { user_id: req.params.id } })
+    partners.update(req.body, { where: { user_id: req.params.id } })
     return res.json(partners)
   }
 
   async destroy(req, res) {
-    Partners.destroy({ where: { id: req.params.id }}).then(deleted => {
+    Partners.destroy({ where: { user_id: req.params.id }}).then(deleted => {
       if (deleted) {
         return res.status(200).json({ success: 'Deleted successfully' })
       }

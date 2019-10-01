@@ -29,7 +29,7 @@ class ContactsController {
   }
 
   async show(req, res) {
-    const contact = await Contacts.findOne({ where: { id: req.params.id } })
+    const contact = await Contacts.findOne({ where: { user_id: req.params.id } })
     return res.json(contact)
   }
 
@@ -44,8 +44,8 @@ class ContactsController {
       return res.status(400).json({ error: 'Validation fails. ' })
     }
 
-    const contact = await Contacts.findOne({ where: { id: req.params.id } })
-    contact.update(req.body, { where: { id: req.params.id } })
+    const contact = await Contacts.findOne({ where: { user_id: req.params.id } })
+    contact.update(req.body, { where: { user_id: req.params.id } })
     return res.json(contact)
   }
 

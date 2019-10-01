@@ -39,7 +39,7 @@ class PersonalDataController {
   }
 
   async show(req, res) {
-    const personalData = await PersonalData.findOne({ where: { id: req.params.id } })
+    const personalData = await PersonalData.findOne({ where: { user_id: req.params.id } })
     return res.json(personalData)
   }
 
@@ -64,13 +64,13 @@ class PersonalDataController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const personalData = await PersonalData.findOne({ where: { id: req.params.id } })
-    personalData.update(req.body, { where: { id: req.params.id } })
+    const personalData = await PersonalData.findOne({ where: { user_id: req.params.id } })
+    personalData.update(req.body, { where: { user_id: req.params.id } })
     return res.json(personalData)
   }
 
   async destroy(req, res) {
-    PersonalData.destroy({ where: { id: req.params.id }}).then(deleted => {
+    PersonalData.destroy({ where: { user_id: req.params.id }}).then(deleted => {
       if (deleted) {
         return res.status(200).json({ success: 'Deleted successfully' })
       }
