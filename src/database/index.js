@@ -9,8 +9,10 @@ import Contacts from '../app/models/Contacts.js'
 import Documents from '../app/models/Documents.js'
 import Partners from '../app/models/Partners.js'
 import SocialMedia from '../app/models/SocialMedia.js'
+import Tag from '../app/models/Tag.js'
+import Avaliation from '../app/models/Avaliation.js'
 
-const models = [User, File, PersonalData, BankData, Contacts, Documents, Partners, SocialMedia]
+const models = [User, File, PersonalData, BankData, Contacts, Documents, Partners, SocialMedia, Tag, Avaliation]
 
 class Database {
   constructor () {
