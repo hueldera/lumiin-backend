@@ -4,7 +4,7 @@ class Avaliation extends Model {
   static init(sequelize) {
     super.init({
       posture: Sequelize.STRING,
-      comunication: Sequelize.STRING
+      communication: Sequelize.STRING
     }, {
       sequelize
     })

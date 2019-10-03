@@ -7,6 +7,8 @@ import DocumentsController from './app/controllers/DocumentsController.js'
 import PartnersController from './app/controllers/PartnersController.js'
 import PersonalDataController from './app/controllers/PersonalDataController.js'
 import SocialMediaController from './app/controllers/SocialMediaController.js'
+import AvaliationController from './app/controllers/AvaliationController.js'
+import TagController from './app/controllers/TagController.js'
 import authMiddleware from './app/middlewares/auth'
 import multer from 'multer'
 import multerConfig from './config/multer'
@@ -68,5 +70,17 @@ routes.get('/socialMedia/:id', SocialMediaController.show)
 routes.post('/socialMedia', SocialMediaController.store)
 routes.put('/socialMedia/:id', SocialMediaController.update)
 routes.delete('/socialMedia/:id', SocialMediaController.destroy)
+
+routes.get('/avaliation', AvaliationController.index)
+routes.get('/avaliation/:id', AvaliationController.show)
+routes.post('/avaliation', AvaliationController.store)
+routes.put('/avaliation/:id', AvaliationController.update)
+routes.delete('/avaliation/:id', AvaliationController.destroy)
+
+routes.get('/tag', TagController.index)
+routes.get('/tag/:id', TagController.show)
+routes.post('/tag', TagController.store)
+routes.put('/tag/:id', TagController.update)
+routes.delete('/tag/:id', TagController.destroy)
 
 export default routes

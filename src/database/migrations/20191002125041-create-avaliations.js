@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      comunication: {
+      communication: {
         type: Sequelize.STRING,
         allowNull: false
       },
