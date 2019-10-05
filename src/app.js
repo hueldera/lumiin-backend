@@ -7,8 +7,8 @@ import './database'
 import * as Sentry from '@sentry/node'
 import sentryConfig from './config/sentry'
 import Youch from 'youch'
-// import helmet from 'helmet'
-// import rateLimit from 'express-rate-limit'
+import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
 import cors from 'cors'
 
 class App {
@@ -29,9 +29,9 @@ class App {
     })
 
     this.server.use(Sentry.Handlers.requestHandler())
-    // this.server.use(helmet())
-    // this.server.use(cors())
-    // this.server.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }))
+    this.server.use(helmet())
+    this.server.use(cors())
+    this.server.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }))
     this.server.use(cors({ origin: true, credentials: true }))
     this.server.use(express.json())
     this.server.use('/files', express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')))

@@ -2,22 +2,19 @@ import nodemailer from 'nodemailer'
 import mailConfig from '../config/mail'
 import exphbs from 'express-handlebars'
 import nodemailerhbs from 'nodemailer-express-handlebars'
+import mg from 'nodemailer-mailgun-transport'
 import { resolve } from 'path'
 
 class Mail {
   constructor () {
     const { host, port, secure, auth } = mailConfig
-    console.log('teste', mailConfig)
-    this.transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure,
-      auth: auth.user ? auth : null,
-      tls: {
-        rejectUnauthorized: false,
-        ciphers: 'SSLv3'
+    // console.log('teste', mailConfig)
+    this.transporter = nodemailer.createTransport(mg({
+      auth: {
+        api_key: mailConfig.api_key,
+        domain: mailConfig.api_domain
       }
-    })
+    }))
 
     this.configureTemplates()
   }
