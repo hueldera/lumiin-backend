@@ -9,6 +9,9 @@ export default {
     pass: process.env.MAIL_PASS
   },
   default: {
-    from: 'Lumiin <noreply@lumiin.io>',
-  }
+    from: 'Lumiin <noreply@lumiin.app>'
+  },
+  api_key: process.env.MAIL_API,
+  api_url: process.env.MAIL_URL,
+  api_domain: process.env.MAIL_DOMAIN
 }

@@ -6,9 +6,10 @@ class PersonalDataController {
     PersonalData.findAll().then(data => {
       return res.json(data)
     })
+
   }
 
-  async store(req, res) {
+  async store (req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       birth_date: Yup.date().required(),
@@ -22,14 +23,14 @@ class PersonalDataController {
       state: Yup.string().required(),
       country: Yup.string().required(),
       state_subscription: Yup.number().integer(),
-      civic_subscription: Yup.number().integer(),
+      civic_subscription: Yup.number().integer()
     })
 
     if (!await schema.isValid(req.body)) {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const exists = await PersonalData.findOne({ where: { user_id: req.userId }})
+    const exists = await PersonalData.findOne({ where: { user_id: req.userId } })
     if (exists) {
       return res.status(400).json({ error: 'Could not store record.' })
     }
@@ -43,7 +44,7 @@ class PersonalDataController {
     return res.json(personalData)
   }
 
-  async update(req, res) {
+  async update (req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
       birth_date: Yup.date(),
@@ -57,7 +58,7 @@ class PersonalDataController {
       state: Yup.string(),
       country: Yup.string(),
       state_subscription: Yup.number().integer(),
-      civic_subscription: Yup.number().integer(),
+      civic_subscription: Yup.number().integer()
     })
 
     if (!await schema.isValid(req.body)) {
@@ -75,6 +76,7 @@ class PersonalDataController {
         return res.status(200).json({ success: 'Deleted successfully' })
       }
     })
+
   }
 }
 
