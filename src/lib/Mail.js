@@ -8,7 +8,7 @@ import { resolve } from 'path'
 class Mail {
   constructor () {
     const { host, port, secure, auth } = mailConfig
-    // console.log('teste', mailConfig)
+    console.log('teste', mailConfig)
     this.transporter = nodemailer.createTransport(mg({
       auth: {
         api_key: mailConfig.api_key,
