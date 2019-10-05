@@ -3,8 +3,9 @@ import * as Yup from 'yup'
 
 class SocialMediaController {
   async index(req, res) {
-    const socialMedia = SocialMedia.findAll()
-    return res.json(socialMedia)
+    SocialMedia.findAll().then(data => {
+      return res.json(data)
+    })
   }
 
   async store(req, res) {
@@ -29,7 +30,7 @@ class SocialMediaController {
   }
 
   async show(req, res) {
-    const socialMedia = await SocialMedia.findOne({ where: { id: req.params.id } })
+    const socialMedia = await SocialMedia.findOne({ where: { user_id: req.params.id } })
     return res.json(socialMedia)
   }
 
@@ -45,14 +46,17 @@ class SocialMediaController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const socialMedia = await SocialMedia.findOne({ where: { id: req.params.id } })
-    socialMedia.update(req.body, { where: { id: req.params.id } })
+    const socialMedia = await SocialMedia.findOne({ where: { user_id: req.params.id } })
+    socialMedia.update(req.body, { where: { user_id: req.params.id } })
     return res.json(socialMedia)
   }
 
   async destroy(req, res) {
-    await SocialMedia.destroy({ where: { user_id: req.params.id } })
-    return res.json({ success: 'Deleted successfully.' })
+    SocialMedia.destroy({ where: { user_id: req.params.id }}).then(deleted => {
+      if (deleted) {
+        return res.status(200).json({ success: 'Deleted successfully' })
+      }
+    })
   }
 }
 

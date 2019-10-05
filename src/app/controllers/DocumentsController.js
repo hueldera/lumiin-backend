@@ -3,8 +3,9 @@ import * as Yup from 'yup'
 
 class DocumentsController {
   async index(req, res) {
-    const documents = Documents.findAll()
-    return res.json(documents)
+    Documents.findAll().then(data => {
+      return res.json(data)
+    })
   }
 
   async store(req, res) {
@@ -21,7 +22,7 @@ class DocumentsController {
   }
 
   async show(req, res) {
-    const documents = await Documents.findOne({ where: { id: req.params.id } })
+    const documents = await Documents.findOne({ where: { user_id: req.params.id } })
     return res.json(documents)
   }
 
@@ -35,14 +36,17 @@ class DocumentsController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const documents = await Documents.findOne({ where: { id: req.params.id } })
-    documents.update(req.body, { where: { id: req.params.id } })
+    const documents = await Documents.findOne({ where: { user_id: req.params.id } })
+    documents.update(req.body, { where: { user_id: req.params.id } })
     return res.json(documents)
   }
 
   async destroy(req, res) {
-    await Documents.destroy({ where: { user_id: req.params.id } })
-    return res.json({ success: 'Deleted successfully.' })
+    Documents.destroy({ where: { user_id: req.params.id }}).then(deleted => {
+      if (deleted) {
+        return res.status(200).json({ success: 'Deleted successfully' })
+      }
+    })
   }
 
 }

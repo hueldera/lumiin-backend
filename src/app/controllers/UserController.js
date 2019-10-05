@@ -11,7 +11,7 @@ class UserController {
       password: Yup.string().required().min(6),
       role: Yup.number().required().integer()
     })
-    console.log(req.body)
+    console.log('REQ.BODY VIADO', req.body)
     if ((!await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails.' })
     }
@@ -21,7 +21,7 @@ class UserController {
     if (userExists) {
       return res.status(400).json({ error: 'User already exists.' })
     }
-    console.log(Mail)
+    console.log('MAIL', Mail)
     await Mail.sendMail({
       to: `${req.body.name} <${req.body.email}>`,
       subject: 'Lumiin account created',

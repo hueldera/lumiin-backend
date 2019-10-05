@@ -2,9 +2,11 @@ import PersonalData from '../models/PersonalData.js'
 import * as Yup from 'yup'
 
 class PersonalDataController {
-  async index (req, res) {
-    const personalData = PersonalData.findAll()
-    return res.json(personalData)
+  async index(req, res) {
+    PersonalData.findAll().then(data => {
+      return res.json(data)
+    })
+
   }
 
   async store (req, res) {
@@ -37,8 +39,8 @@ class PersonalDataController {
     return res.json(personalData)
   }
 
-  async show (req, res) {
-    const personalData = await PersonalData.findOne({ where: { id: req.params.id } })
+  async show(req, res) {
+    const personalData = await PersonalData.findOne({ where: { user_id: req.params.id } })
     return res.json(personalData)
   }
 
@@ -46,8 +48,8 @@ class PersonalDataController {
     const schema = Yup.object().shape({
       name: Yup.string(),
       birth_date: Yup.date(),
-      cpf_cnpj: Yup.number().integer(),
-      rg: Yup.number().integer(),
+      cpf_cnpj: Yup.string(),
+      rg: Yup.string(),
       street: Yup.string(),
       house_number: Yup.number().integer(),
       house_complement: Yup.string(),
@@ -63,14 +65,18 @@ class PersonalDataController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const personalData = await PersonalData.findOne({ where: { id: req.params.id } })
-    personalData.update(req.body, { where: { id: req.params.id } })
+    const personalData = await PersonalData.findOne({ where: { user_id: req.params.id } })
+    personalData.update(req.body, { where: { user_id: req.params.id } })
     return res.json(personalData)
   }
 
-  async destroy (req, res) {
-    await PersonalData.destroy({ where: { user_id: req.params.id } })
-    return res.json({ success: 'Deleted successfully.' })
+  async destroy(req, res) {
+    PersonalData.destroy({ where: { user_id: req.params.id }}).then(deleted => {
+      if (deleted) {
+        return res.status(200).json({ success: 'Deleted successfully' })
+      }
+    })
+
   }
 }
 

@@ -3,8 +3,9 @@ import * as Yup from 'yup'
 
 class ContactsController {
   async index(req, res) {
-    const contacts = Contacts.findAll()
-    return res.json(contacts)
+    Contacts.findAll().then(data => {
+      return res.json(data)
+    })
   }
 
   async store(req, res) {
@@ -28,7 +29,7 @@ class ContactsController {
   }
 
   async show(req, res) {
-    const contact = await Contacts.findOne({ where: { id: req.params.id } })
+    const contact = await Contacts.findOne({ where: { user_id: req.params.id } })
     return res.json(contact)
   }
 
@@ -43,14 +44,17 @@ class ContactsController {
       return res.status(400).json({ error: 'Validation fails. ' })
     }
 
-    const contact = await Contacts.findOne({ where: { id: req.params.id } })
-    contact.update(req.body, { where: { id: req.params.id } })
+    const contact = await Contacts.findOne({ where: { user_id: req.params.id } })
+    contact.update(req.body, { where: { user_id: req.params.id } })
     return res.json(contact)
   }
 
   async destroy(req, res) {
-    await Contacts.destroy({ where: { user_id: req.params.id } })
-    return res.json({ success: 'Deleted successfully.' })
+    await Contacts.destroy({ where: { user_id: req.params.id } }).then(deleted => {
+      if (deleted) {
+        return res.json({ success: 'Deleted successfully.' })
+      }
+    })
   }
 
 }
