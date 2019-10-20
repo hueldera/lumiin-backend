@@ -26,6 +26,10 @@ const bruteForce = new Brute(bruteStore)
 // bruteForce.prevent,
 routes.post('/sessions', SessionController.store)
 
+if (process.env.NODE_ENV === 'test') {
+  routes.post('/initialusers', UserController.store)
+}
+
 routes.use(authMiddleware)
 
 routes.put('/users', UserController.update)

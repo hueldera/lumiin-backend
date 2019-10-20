@@ -5,7 +5,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "sucrase-node src/server.js"
+    "start": "sucrase-node src/server.js",
+    "pretest": "set NODE_ENV=test&& sequelize db:migrate",
+    "test": "set NODE_ENV=test&& jest",
+    "postest": "set NODE_ENV=test&& sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "@sentry/node": "5.6.1",
@@ -27,13 +30,20 @@
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.14.0",
+    "sqlite3": "^4.1.0",
     "youch": "^2.0.10",
     "yup": "^0.27.0"
   },
   "devDependencies": {
+    "@sucrase/jest-plugin": "^2.0.0",
+    "@types/jest": "^24.0.19",
+    "factory-girl": "^5.0.4",
+    "faker": "^4.1.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.1",
-    "sequelize-cli": "^5.5.0",
+    "sequelize-cli": "^5.5.1",
     "standard": "^14.0.0-0",
-    "sucrase": "^3.10.1"
+    "sucrase": "^3.10.1",
+    "supertest": "^4.0.2"
   }
 }
