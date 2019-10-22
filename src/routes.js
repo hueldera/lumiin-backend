@@ -37,7 +37,11 @@ routes.put('/users', UserController.update)
 routes.post('/files', upload.single('file'), FileController.store)
 
 routes.post('/users', hasRole([roleConfig.MANAGER]), UserController.store)
-routes.get('/providers', hasRole([roleConfig.MANAGER]), ProviderController.index)
+routes.get(
+  '/providers',
+  hasRole([roleConfig.MANAGER]),
+  ProviderController.index
+)
 
 routes.get('/bankData', BankDataController.index)
 routes.get('/bankData/:id', BankDataController.show)

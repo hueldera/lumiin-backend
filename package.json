@@ -6,15 +6,16 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "sucrase-node src/server.js",
-    "pretest": "set NODE_ENV=test&& sequelize db:migrate",
-    "test": "set NODE_ENV=test&& jest",
-    "postest": "set NODE_ENV=test&& sequelize db:migrate:undo:all"
+    "pretest": "export NODE_ENV=test && sequelize db:migrate",
+    "test": "export NODE_ENV=test && jest",
+    "postest": "export NODE_ENV=test && sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "@sentry/node": "5.6.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
+    "eslint": "^6.5.1",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-brute": "^1.0.1",

@@ -9,11 +9,11 @@ describe('User', () => {
       role: roles.MANAGER
     })
 
+    console.log(user)
+
     const response = await request(app)
       .post('/initialusers')
-      .send(
-        { ...user }
-      )
+      .send({ ...user })
 
     expect(response.body).toHaveProperty('id')
   })
