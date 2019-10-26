@@ -8,7 +8,9 @@
     "start": "sucrase-node src/server.js",
     "pretest": "export NODE_ENV=test && sequelize db:migrate",
     "test": "export NODE_ENV=test && jest",
-    "postest": "export NODE_ENV=test && sequelize db:migrate:undo:all"
+    "postest": "export NODE_ENV=test && sequelize db:migrate:undo:all",
+    "build": "sucrase ./src -d ./dist --transforms imports",
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "@sentry/node": "5.6.1",
