@@ -2,13 +2,13 @@ import Tag from '../models/Tag.js'
 import * as Yup from 'yup'
 
 class TagController {
-  async index(req, res) {
+  async index (req, res) {
     Tag.findAll().then(data => {
       return res.json(data)
     })
   }
 
-  async store(req, res) {
+  async store (req, res) {
     const schema = Yup.object().shape({
       note: Yup.number().integer().required(),
       comment: Yup.string()
@@ -18,7 +18,7 @@ class TagController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const exists = await Tag.findOne({ where: { user_id: req.userId }})
+    const exists = await Tag.findOne({ where: { user_id: req.userId } })
     if (exists) {
       return res.status(400).json({ error: 'Could not store record.' })
     }
@@ -27,12 +27,12 @@ class TagController {
     return res.json(tag)
   }
 
-  async show(req, res) {
+  async show (req, res) {
     const tag = await Tag.findOne({ where: { user_id: req.params.id } })
     return res.json(tag)
   }
 
-  async update(req, res) {
+  async update (req, res) {
     const schema = Yup.object().shape({
       note: Yup.number().integer(),
       comment: Yup.string()
@@ -47,7 +47,7 @@ class TagController {
     return res.json(tag)
   }
 
-  async destroy(req, res) {
+  async destroy (req, res) {
     Tag.destroy({ where: { user_id: req.params.id } }).then(deleted => {
       if (deleted) {
         return res.json({ success: 'Deleted successfully' })
