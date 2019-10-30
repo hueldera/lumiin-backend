@@ -4,6 +4,17 @@ import factory from '../factories'
 import roles from '../../src/config/roles'
 
 describe('BankData', () => {
+  beforeAll(async () => {
+    const user = await factory.attrs('User', {
+      role: roles.MANAGER
+    })
+
+    const userRegistered = await request(app)
+      .post('/initialusers')
+      .send({ ...user })
+    const userID = userRegistered.body.id
+  })
+
   it('should be able to store bank data', async () => {
     const user = await factory.attrs('User', {
       role: roles.MANAGER
@@ -56,14 +67,14 @@ describe('BankData', () => {
   })
 
   it('should be able to show a single bank data', async () => {
-    // ask huelder from userID
     const user = await factory.attrs('User', {
       role: roles.MANAGER
     })
 
-    await request(app)
-      .post('/initialusers')
-      .send({ ...user })
+    //const userRegistered = await request(app)
+    //.post('/initialusers')
+    //.send({ ...user })
+    //const userID = userRegistered.body.id
 
     const userResponse = await request(app)
       .post('/sessions')
@@ -72,7 +83,7 @@ describe('BankData', () => {
     const authStr = 'Bearer ' + userResponse.body.token
 
     const response = await request(app)
-      .get('/bankData/1')
+      .get(`/bankData/${userID}`)
       .set('Authorization', authStr)
 
     expect(response.body)
@@ -83,9 +94,10 @@ describe('BankData', () => {
       role: roles.MANAGER
     })
 
-    await request(app)
+    const userRegistered = await request(app)
       .post('/initialusers')
       .send({ ...user })
+    const userID = userRegistered.body.id
 
     const userResponse = await request(app)
       .post('/sessions')
@@ -100,22 +112,24 @@ describe('BankData', () => {
     }
     const authStr = 'Bearer ' + userResponse.body.token
     const response = await request(app)
-      .put('/bankData/1')
+      .put(`/bankData/${userID}`)
       .set('Authorization', authStr)
       .send({ ...bankData })
 
-    expect(response.body).toHaveProperty('id')
+    console.log('updateee', response.body, userRegistered)
+
+    expect(response.body)
   })
 
   it('should be able to delete a single bank data', async () => {
-    // ask huelder from userID
     const user = await factory.attrs('User', {
       role: roles.MANAGER
     })
 
-    await request(app)
+    const userRegistered = await request(app)
       .post('/initialusers')
       .send({ ...user })
+    const userID = userRegistered.body.id
 
     const userResponse = await request(app)
       .post('/sessions')
@@ -124,7 +138,7 @@ describe('BankData', () => {
     const authStr = 'Bearer ' + userResponse.body.token
 
     const response = await request(app)
-      .delete('/bankData/1')
+      .delete(`/bankData/${userID}`)
       .set('Authorization', authStr)
 
     expect(response.body)
