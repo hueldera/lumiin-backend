@@ -14,7 +14,7 @@ class AvaliationController {
       communication: Yup.string().required()
     })
 
-    if (!await schema.isValid(req.body)) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
@@ -23,12 +23,17 @@ class AvaliationController {
       return res.status(400).json({ error: 'Could not store record.' })
     }
 
-    const avaliation = await Avaliation.create(req.body)
+    const avaliation = await Avaliation.create({
+      ...req.body,
+      user_id: req.userId
+    })
     return res.json(avaliation)
   }
 
   async show(req, res) {
-    const avaliation = await Avaliation.findOne({ where: { user_id: req.params.id } })
+    const avaliation = await Avaliation.findOne({
+      where: { user_id: req.params.id }
+    })
     return res.json(avaliation)
   }
 
@@ -38,13 +43,19 @@ class AvaliationController {
       communication: Yup.string()
     })
 
-    if (!await schema.isValid(req.body)) {
+    if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const avaliation = await Avaliation.findOne({ where: { user_id: req.params.id } })
-    avaliation.update(req.body, { where: { user_id: req.params.id } })
-    return res.json(avaliation)
+    const avaliation = await Avaliation.findOne({
+      where: { user_id: req.params.id }
+    })
+    if (!avaliation)
+      return res.status(400).json({ error: 'Avaliation doenst exists' })
+    const updateAvaliation = await avaliation.update(req.body, {
+      where: { user_id: req.params.id }
+    })
+    return res.json(updateAvaliation)
   }
 
   async destroy(req, res) {

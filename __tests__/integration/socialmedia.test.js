@@ -4,10 +4,12 @@ import factory from '../factories'
 import roles from '../../src/config/roles'
 
 let userID = 0
+let token = ''
 
 describe('Social Media', () => {
   beforeEach(async () => {
     let userRegistered
+    let userToken
     let user = await factory.attrs('User', {
       role: roles.MANAGER
     })
@@ -17,6 +19,15 @@ describe('Social Media', () => {
       .send({ ...user })
 
     userID = userRegistered.body.id
+
+    userToken = await request(app)
+      .post('/sessions')
+      .send({
+        email: user.email,
+        password: user.password
+      })
+
+    token = userToken.body.token
   })
 
   it('should be able to store social media', async () => {
@@ -27,7 +38,7 @@ describe('Social Media', () => {
       twitter: 'twitter'
     }
 
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
     const response = await request(app)
       .post('/socialMedia')
       .set('Authorization', authStr)
@@ -37,7 +48,7 @@ describe('Social Media', () => {
   })
 
   it('should be able to list social media', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
 
     const response = await request(app)
       .get('/socialMedia')
@@ -47,7 +58,7 @@ describe('Social Media', () => {
   })
 
   it('should be able to show a single social media', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
 
     const response = await request(app)
       .get(`/socialMedia/${userID}`)
@@ -63,7 +74,7 @@ describe('Social Media', () => {
       facebook: 'facebook',
       twitter: 'twitter'
     }
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
     const response = await request(app)
       .put(`/socialMedia/${userID}`)
       .set('Authorization', authStr)
@@ -73,7 +84,7 @@ describe('Social Media', () => {
   })
 
   it('should be able to delete a single social media', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
 
     const response = await request(app)
       .delete(`/socialMedia/${userID}`)

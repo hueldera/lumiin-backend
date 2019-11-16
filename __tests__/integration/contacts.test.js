@@ -4,10 +4,12 @@ import factory from '../factories'
 import roles from '../../src/config/roles'
 
 let userID = 0
+let token = ''
 
 describe('Contacts', () => {
   beforeEach(async () => {
     let userRegistered
+    let userToken
     let user = await factory.attrs('User', {
       role: roles.MANAGER
     })
@@ -17,6 +19,15 @@ describe('Contacts', () => {
       .send({ ...user })
 
     userID = userRegistered.body.id
+
+    userToken = await request(app)
+      .post('/sessions')
+      .send({
+        email: user.email,
+        password: user.password
+      })
+
+    token = userToken.body.token
   })
 
   it('should be able to store contacts', async () => {
@@ -25,7 +36,7 @@ describe('Contacts', () => {
       phone: 19974154036,
       cellphone: 19974154036,
     }
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
     const response = await request(app)
       .post('/contacts')
       .set('Authorization', authStr)
@@ -35,7 +46,7 @@ describe('Contacts', () => {
   })
 
   it('should be able to list contacts', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
 
     const response = await request(app)
       .get('/contacts')
@@ -45,7 +56,7 @@ describe('Contacts', () => {
   })
 
   it('should be able to show a single contact', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
 
     const response = await request(app)
       .get(`/bankData/${userID}`)
@@ -60,7 +71,7 @@ describe('Contacts', () => {
       phone: 19974312312,
       cellphone: 19974312312,
     }
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
     const response = await request(app)
       .put(`/contacts/${userID}`)
       .set('Authorization', authStr)
@@ -70,7 +81,7 @@ describe('Contacts', () => {
   })
 
   it('should be able to delete a single contact', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
 
     const response = await request(app)
       .delete(`/contacts/${userID}`)

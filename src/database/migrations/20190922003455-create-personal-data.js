@@ -13,7 +13,7 @@ module.exports = {
         references: {
           model: 'users',
           key: 'id'
-        },
+        }
       },
       name: {
         type: Sequelize.STRING,

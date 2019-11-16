@@ -4,10 +4,12 @@ import factory from '../factories'
 import roles from '../../src/config/roles'
 
 let userID = 0
+let token =''
 
 describe('Tag', () => {
   beforeEach(async () => {
     let userRegistered
+    let userToken
     let user = await factory.attrs('User', {
       role: roles.MANAGER
     })
@@ -17,6 +19,15 @@ describe('Tag', () => {
       .send({ ...user })
 
     userID = userRegistered.body.id
+
+    userToken = await request(app)
+      .post('/sessions')
+      .send({
+        email: user.email,
+        password: user.password
+      })
+
+    token = userToken.body.token
   })
 
   it('should be able to store tag', async () => {
@@ -25,7 +36,7 @@ describe('Tag', () => {
       comment: 'test'
     }
 
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
     const response = await request(app)
       .post('/tag')
       .set('Authorization', authStr)
@@ -35,7 +46,7 @@ describe('Tag', () => {
   })
 
   it('should be able to list tag', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
 
     const response = await request(app)
       .get('/tag')
@@ -45,7 +56,7 @@ describe('Tag', () => {
   })
 
   it('should be able to show a single tag', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
 
     const response = await request(app)
       .get(`/tag/${userID}`)
@@ -59,7 +70,7 @@ describe('Tag', () => {
       note: 10,
       comment: 'test'
     }
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
     const response = await request(app)
       .put(`/tag/${userID}`)
       .set('Authorization', authStr)
@@ -69,7 +80,7 @@ describe('Tag', () => {
   })
 
   it('should be able to delete a single tag', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
 
     const response = await request(app)
       .delete(`/tag/${userID}`)
