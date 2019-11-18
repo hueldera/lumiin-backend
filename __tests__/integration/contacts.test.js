@@ -41,7 +41,7 @@ describe('Contacts', () => {
     const response = await request(app)
       .post('/contacts')
       .set('Authorization', authStr)
-      .send({ ...contact })
+      .send(contact)
 
     expect(response.body).toHaveProperty('id')
   })
@@ -81,7 +81,7 @@ describe('Contacts', () => {
       .send({ ...contact })
 
     const response = await request(app)
-      .get(`/bankData/${userID}`)
+      .get(`/contacts/${userID}`)
       .set('Authorization', authStr)
 
     expect(response.body).toHaveProperty('id')
@@ -132,7 +132,7 @@ describe('Contacts', () => {
       .delete(`/contacts/${userID}`)
       .set('Authorization', authStr)
 
-    expect(response.body).toHaveProperty('id')
+    expect(response.body).toHaveProperty('success')
   })
 
   afterAll(async () => {
