@@ -2,12 +2,15 @@ import request from 'supertest'
 import app from '../../src/app'
 import factory from '../factories'
 import roles from '../../src/config/roles'
-
-let userID = 0
+import truncate from '../utils/truncate'
 
 describe('Avaliation', () => {
+  let userID = 0
+  let token = ''
   beforeEach(async () => {
+    await truncate()
     let userRegistered
+    let userToken
     let user = await factory.attrs('User', {
       role: roles.MANAGER
     })
@@ -17,6 +20,15 @@ describe('Avaliation', () => {
       .send({ ...user })
 
     userID = userRegistered.body.id
+
+    userToken = await request(app)
+      .post('/sessions')
+      .send({
+        email: user.email,
+        password: user.password
+      })
+
+    token = userToken.body.token
   })
 
   it('should be able to store avaliation', async () => {
@@ -25,7 +37,7 @@ describe('Avaliation', () => {
       communication: 'top'
     }
 
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
     const response = await request(app)
       .post('/avaliation')
       .set('Authorization', authStr)
@@ -35,7 +47,16 @@ describe('Avaliation', () => {
   })
 
   it('should be able to list avaliation', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
+    const avaliation = {
+      posture: 'bom',
+      communication: 'top'
+    }
+
+    await request(app)
+      .post('/avaliation')
+      .set('Authorization', authStr)
+      .send({ ...avaliation })
 
     const response = await request(app)
       .get('/avaliation')
@@ -45,7 +66,16 @@ describe('Avaliation', () => {
   })
 
   it('should be able to show a single avaliation', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
+    const avaliation = {
+      posture: 'bom',
+      communication: 'top'
+    }
+
+    await request(app)
+      .post('/avaliation')
+      .set('Authorization', authStr)
+      .send({ ...avaliation })
 
     const response = await request(app)
       .get(`/avaliation/${userID}`)
@@ -55,11 +85,21 @@ describe('Avaliation', () => {
   })
 
   it('should be able to update avaliation', async () => {
+    const authStr = 'Bearer ' + token
+    const initAvaliation = {
+      posture: 'mal',
+      communication: 'horrivel'
+    }
+
     const avaliation = {
       posture: 'bom',
       communication: 'top'
     }
-    const authStr = 'Bearer ' + userID
+    await request(app)
+      .post('/avaliation')
+      .set('Authorization', authStr)
+      .send({ ...initAvaliation })
+
     const response = await request(app)
       .put(`/avaliation/${userID}`)
       .set('Authorization', authStr)
@@ -69,12 +109,25 @@ describe('Avaliation', () => {
   })
 
   it('should be able to delete a single avaliation', async () => {
-    const authStr = 'Bearer ' + userID
+    const authStr = 'Bearer ' + token
+    const avaliation = {
+      posture: 'bom',
+      communication: 'top'
+    }
+
+    await request(app)
+      .post('/avaliation')
+      .set('Authorization', authStr)
+      .send({ ...avaliation })
 
     const response = await request(app)
       .delete(`/avaliation/${userID}`)
       .set('Authorization', authStr)
 
-    expect(response.body).toHaveProperty('id')
+    expect(response.body).toHaveProperty('success')
+  })
+
+  afterAll(async () => {
+    await truncate()
   })
 })
