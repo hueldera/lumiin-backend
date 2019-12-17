@@ -12,7 +12,7 @@ class ProviderController {
         attributes: ['name', 'path', 'url']
       }] })
 
-    return res.json(providers)
+    return res.json({providers})
   }
 }
 

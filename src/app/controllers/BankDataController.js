@@ -26,7 +26,11 @@ class BankDataController {
       return res.status(400).json({ error: 'Could not store record. ' })
     }
 
-    const bankData = await BankData.create(req.body)
+    const bankData = await BankData.create({
+      ...req.body,
+      user_id: req.userId
+    })
+
     return res.json(bankData)
   }
 
@@ -53,13 +57,16 @@ class BankDataController {
     const bankData = await BankData.findOne({
       where: { user_id: req.params.id }
     })
-    bankData.update(req.body, { where: { user_id: req.params.id } })
-    return res.json(bankData)
+    if (!bankData)
+      return res.status(400).json({ error: 'Bank Data doenst exists' })
+
+    const updateBankData = await bankData.update(req.body, {
+      where: { user_id: req.params.id }
+    })
+    return res.json(updateBankData)
   }
 
   async destroy(req, res) {
-    //await BankData.destroy({ where: { user_id: req.params.id }})
-    //return res.json({ success: 'Deleted successfully'})
     BankData.destroy({ where: { user_id: req.params.id } }).then(deleted => {
       if (deleted) {
         return res.status(200).json({ success: 'Deleted successfully' })
