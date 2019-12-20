@@ -20,11 +20,6 @@ class TagController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const exists = await Tag.findOne({ where: { user_id: req.userId } })
-    if (exists) {
-      return res.status(400).json({ error: 'Could not store record.' })
-    }
-
     const tag = await Tag.create({
       ...req.body,
       user_id: req.userId
