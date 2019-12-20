@@ -18,11 +18,6 @@ class AvaliationController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const exists = await Avaliation.findOne({ where: { user_id: req.userId } })
-    if (exists) {
-      return res.status(400).json({ error: 'Could not store record.' })
-    }
-
     const avaliation = await Avaliation.create({
       ...req.body,
       user_id: req.userId

@@ -20,13 +20,6 @@ class SocialMediaController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const exists = await SocialMedia.findOne({
-      where: { user_id: req.userId }
-    })
-    if (exists) {
-      return res.status(400).json({ error: 'Could not store record.' })
-    }
-
     const socialMedia = await SocialMedia.create({
       ...req.body,
       user_id: req.userId
