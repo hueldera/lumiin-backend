@@ -21,11 +21,6 @@ class BankDataController {
       return res.status(400).json({ error: 'Validation fails.' })
     }
 
-    const exists = await BankData.findOne({ where: { user_id: req.userId } })
-    if (exists) {
-      return res.status(400).json({ error: 'Could not store record. ' })
-    }
-
     const bankData = await BankData.create({
       ...req.body,
       user_id: req.userId

@@ -1,5 +1,5 @@
-import Sequelize, { Model } from "sequelize";
-import bcrypt from "bcryptjs";
+import Sequelize, { Model } from 'sequelize'
+import bcrypt from 'bcryptjs'
 
 class Documents extends Model {
   static init(sequelize) {
@@ -11,14 +11,14 @@ class Documents extends Model {
       {
         sequelize
       }
-    );
+    )
 
-    return this;
+    return this
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: "user_id", as: "user" });
+    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' })
   }
 }
 
-export default Documents;
+export default Documents
