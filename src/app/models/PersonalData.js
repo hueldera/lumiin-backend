@@ -1,4 +1,4 @@
-import Sequelize, { Model } from 'sequelize'
+import Sequelize, { Model } from "sequelize";
 
 class PersonalData extends Model {
   static init(sequelize) {
@@ -21,17 +21,17 @@ class PersonalData extends Model {
       {
         sequelize
       }
-    )
+    );
 
-    return this
+    return this;
   }
 
   static associate(models) {
     this.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user'
-    })
+      foreignKey: "user_id",
+      as: "user"
+    });
   }
 }
 
-export default PersonalData
+export default PersonalData;
